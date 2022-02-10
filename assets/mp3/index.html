@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>js实现歌词滚动播放</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+ 
+        .bg {
+            width: 100%;
+            height:360px;
+            background-color:#333;
+            margin:20px auto;
+            color: #fff;
+            overflow: hidden;
+            position: relative;
+            font-family: "微软雅黑";
+        }
+ 
+        .bg ul {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            list-style: none;
+        }
+ 
+        .bg ul li {
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        .bg ul li.active {
+            color: #2ecc71;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+ 
+    </style>
+</head>
+
+<body>
+    <div class="bg"></div>
+    <center> <audio src="./audio.mp3" controls></audio></center>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        function parseLyric(text) {
+            //按行分割歌词
+            let lyricArr = text.split('\n');
+            //console.log(lyricArr)//0: "[ti:七里香]" "[ar:周杰伦]"...
+            let result = []; //新建一个数组存放最后结果
+            //遍历分割后的歌词数组，将格式化后的时间节点，歌词填充到result数组
+            for (i = 0; i < lyricArr.length; i++) {
+                let playTimeArr = lyricArr[i].match(/\[\d{2}:\d{2}((\.|\:)\d{2})\]/g); //正则匹配播放时间
+                let lineLyric = "";
+                if (lyricArr[i].split(playTimeArr).length > 0) {
+                    lineLyric = lyricArr[i].split(playTimeArr);
+                }
+
+                if (playTimeArr != null) {
+                    for (let j = 0; j < playTimeArr.length; j++) {
+                        let time = playTimeArr[j].substring(1, playTimeArr[j].indexOf("]")).split(":");
+                        //数组填充
+                        result.push({
+                            time: (parseInt(time[0]) * 60 + parseFloat(time[1])).toFixed(4),
+                            content: String(lineLyric).substr(1)
+                        });
+                    }
+                }
+
+
+            }
+            return result;
+        }
+
+
+        let text = "[ti:七里香]\n[ar:周杰伦]\n[al:七里香]\n[by:]\n[offset:0]\n[00:00.00]七里香 - 周杰伦 (Jay Chou)\n[00:06.96]词：方文山\n[00:13.93]曲：周杰伦\n[00:20.90]编曲：钟兴民\n[00:27.87]窗外的麻雀在电线杆上多嘴\n[00:34.52]你说这一句很有夏天的感觉\n[00:41.23]手中的铅笔在纸上来来回回\n[00:47.58]我用几行字形容你是我的谁\n[00:53.33]\n[00:54.31]秋刀鱼的滋味猫跟你都想了解\n[01:01.65]初恋的香味就这样被我们寻回\n[01:07.74]那温暖的阳光像刚摘的鲜艳草莓\n[01:14.21]你说你舍不得吃掉这一种感觉\n[01:20.91]雨下整夜我的爱溢出就像雨水\n[01:27.67]院子落叶跟我的思念厚厚一叠\n[01:34.41]几句是非也无法将我的热情冷却\n[01:41.41]\n[01:41.95]你出现在我诗的每一页\n[01:48.11]雨下整夜我的爱溢出就像雨水\n[01:54.64]窗台蝴蝶像诗里纷飞的美丽章节\n[02:01.42]我接着写\n[02:03.91]把永远爱你写进诗的结尾\n[02:08.98]你是我唯一想要的了解\n[02:14.80]\n[02:42.26]雨下整夜我的爱溢出就像雨水\n[02:48.68]院子落叶跟我的思念厚厚一叠\n[02:55.43]几句是非也无法将我的热情冷却\n[03:03.03]你出现在我诗的每一页\n[03:08.79]\n[03:09.46]那饱满的稻穗幸福了这个季节\n[03:16.77]而你的脸颊像田里熟透的蕃茄\n[03:22.82]你突然对我说七里香的名字很美\n[03:29.27]我此刻却只想亲吻你倔强的嘴\n[03:35.97]雨下整夜我的爱溢出就像雨水\n[03:42.72]院子落叶跟我的思念厚厚一叠\n[03:49.43]几句是非也无法将我的热情冷却\n[03:56.90]你出现在我诗的每一页\n[04:02.76]\n[04:03.50]整夜我的爱溢出就像雨水\n[04:09.58]窗台蝴蝶像诗里纷飞的美丽章节\n[04:16.66]我接着写\n[04:18.42]\n[04:18.93]把永远爱你写进诗的结尾\n[04:24.01]你是我唯一想要的了解";
+
+        let audio = document.querySelector('audio');
+
+        let result = parseLyric(text); //执行lyc解析
+        console.log(result);
+
+
+        // 把生成的数据显示到界面上去
+        let $ul = $("<ul></ul>");
+        for (let i = 0; i < result.length; i++) {
+            let $li = $("<li></li>").text(result[i].content);
+            $ul.append($li);
+        }
+        $(".bg").append($ul);
+
+        let lineNo = 0; // 当前行歌词
+        let preLine = 6; // 当播放6行后开始滚动歌词
+        let lineHeight = -30; // 每次滚动的距离
+
+        // 滚动播放 歌词高亮  增加类名active
+        function highLight() {
+            let $li = $("li");
+            $li.eq(lineNo).addClass("active").siblings().removeClass("active");
+            if (lineNo > preLine) {
+                $ul.stop(true, true).animate({ top: (lineNo - preLine) * lineHeight });
+            }
+        }
+
+        highLight();
+
+        // 播放的时候不断渲染
+        audio.addEventListener("timeupdate", function() {
+            console.log(11);
+            if (lineNo == result.length) return;
+            if ($("li").eq(0).hasClass("active")) {
+                $("ul").css("top", "0");
+            }
+            console.log(audio.currentTime);
+            lineNo =getLineNo(audio.currentTime);
+            highLight();
+            lineNo++;
+        });
+
+        // 当快进或者倒退的时候，找到最近的后面那个result[i].time
+        function getLineNo(currentTime) {
+            if (currentTime >= parseFloat(result[lineNo].time)) {
+                // 快进
+                for (let i = result.length - 1; i >= lineNo; i--) {
+                    if (currentTime >= parseFloat(result[i].time)) {
+                        return i;
+                    }
+                }
+            } else {
+                // 后退
+                for (let i = 0; i <= lineNo; i++) {
+                    if (currentTime <= parseFloat(result[i].time)) {
+                        return i - 1;
+                    }
+                }
+            }
+        }
+
+        //播放结束自动回到开头
+        audio.addEventListener("ended", function() {
+            lineNo = 0;
+            highLight();
+            audio.play();
+            $("ul").css("top", "0");
+        });
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,261 @@
+/* css reset */
+* {padding:0;margin:0;}
+html,body {height: 100%;}
+
+/* header */
+header {
+    width: 100%;
+    height: 80px;
+    box-shadow: 0 2px 10px #3434341a;
+    margin-bottom: 30px;
+}
+header > section { 
+    width: 1024px; height: 100%; 
+    overflow: hidden; margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+header > section .navs {display: flex;list-style: none;width: 420px;height: 100%;}
+header > section .navs li {margin:0 20px}
+header > section .navs li.active a {color:#000 !important;border-bottom: 2px solid #000;}
+header > section .navs li a{display: inline-block; height: 77px;line-height: 77px; border: 1px solid transparent; font-size:16px;color:#909399; text-decoration: none;}
+header > section .navs li a:hover{color:#000}
+header section > .member { position: relative; display: flex; align-items: center; }
+header section > .member input{
+    width: 240px;
+    height: 20px;
+    padding: 5px 35px 5px 10px;
+    border: 1px solid #dcdfe6;
+    background: #f8f8f8 !important;
+    outline: none;
+    margin-right: 15px;
+}
+header section > .member input::-webkit-input-placeholder{color: #dcdfe6 !important;}
+header section > .member i {position: absolute;top: 9px; left: 260px; cursor: pointer;}
+header section > .member span {color:#606266;font-size: 14px;}
+header section > .member img {width: 40px;height: 40px;}
+  
+/* 点播 */
+section.video {
+    width: 1024px;
+    overflow: visible; margin: 0 auto;
+} 
+section.video h1 { color: #000;font-size: 28px;line-height: 28px;margin-top: 60px;}
+section.video ul { width: 100%; position: relative;  list-style: none;}
+section.video ul li { width: 224px;padding: 25px 15px;cursor: pointer;float: left;}
+section.video ul li div {width: 224px; overflow: hidden;margin: 10px 0;}
+section.video ul li img {width: 100%; transition: all .3s;}
+section.video ul li img:hover {cursor: pointer; transform: scale(1.3)}
+section.video ul li span {
+    display: inline-block;width: 100%; 
+    white-space:nowrap;overflow:hidden;
+    text-overflow:ellipsis;
+}
+section.video ul li p {font-size: 13px; color: #999;}
+section.video ul li p i {vertical-align: middle;margin-right: 5px;}
+/* 直播 */
+.video .live {
+    width: 100%;
+    background-color: #000;
+    height: 460px;
+    margin-top: 30px;
+}
+.video .live video {width: 100%; height: 100%;}
+/* 点播 */
+.video-wrapper {
+    background: rgba(17,17,17,.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    left: 0;
+    top:0;
+    display: none;
+}
+.video-wrapper .bg {
+    width: 100%;
+    height: 100%;
+    background-image: url("../mp4/1.jpeg");
+    position: absolute;
+    top: 0;
+    -webkit-filter: blur(15px);
+    filter: blur(15px);
+    z-index: -1;
+    background-size: 100% auto;
+    transform: scale(1.1);
+}
+.video-wrapper video {
+    position: absolute;
+    width: 30%;
+    height: 100%;
+    background: transparent;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    user-select: none;
+}
+.video-wrapper .close {
+    width: 56px;
+    height: 56px;
+    background: url(../imgs/close.svg) no-repeat 50%;
+    background-size: 100% auto;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+/* 底部 */
+footer {
+    clear: both;
+    text-align: center;
+    font-size: 12px;
+    color: #909399;
+    background: #1f1f1f;
+    padding: 20px 0;
+    margin-top: 60px;
+}
+footer p {margin: 10px 0;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* captcha */
+section.captcha {
+    width: 400px;
+    height: 340px;
+    background-color: #fff;
+    position: fixed;
+    z-index: 9;
+    text-align: center;
+
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+section.captcha h2 {display: flex;align-items: center; justify-content: space-between;padding: 15px;}
+section.captcha .check {position: relative;;}
+section.captcha .check img:nth-of-type(1) {width: 378px;height: 222px;}
+section.captcha .check img:nth-of-type(2) {width: 75px;height: 75px;position: absolute; left: 0px; top: 18px}
+section.captcha .drag {width: 375px;height: 20px;margin:auto;margin-top: 10px;background-color: #ccc;border-radius: 30px;}
+section.captcha .drag .btn {width: 30px;height: 30px;border-radius: 50%;background-color: #538acb;position:relative;left:0px;top: -4px;cursor: pointer;}
+
+
+/* backTop */
+.backTop {
+    position: fixed;
+    right: 120px;
+    bottom: 140px;
+    cursor: pointer;
+    display: none;
+    z-index: 9;
+}
+
+/* login */
+section.login {
+    width: 100%;
+    height: 100%;
+    position: fixed;    
+    background: rgba(0, 0, 0, .5);
+    z-index: 8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+section.login .item {
+    width: 640px;
+    height: 350px;
+    background-color: #fff;
+    display: flex;
+}
+section.login .item .menu {
+    width: 220px;
+    height: 100%;
+    background: url(../imgs/menu.png) 50% no-repeat;
+}
+section.login .item .form  {flex:1;text-align: center;position: relative;}
+section.login .item p.close {text-align: right;padding:20px 20px 0 0;}
+section.login .item p.close i {font-size:30px}
+section.login .item p.font {font-size:20px;padding:20px;text-align: left;}
+section.login .item .form p.msg {
+    height: 17px;
+    font-size: 12px;
+    text-align: left !important;
+    color: red;
+    margin-bottom: 20px;
+    margin-left: 30px;
+}
+section.login .item .form input {
+    width: 340px;
+    height: 40px;
+    margin: 0 auto;
+    display: block;
+    border: 1px solid #dcdfe6;
+    outline: none;
+    padding-left: 20px;
+}
+section.login .item .form input::-webkit-input-placeholder{color: #dcdfe6 !important;}
+section.login .item .form .captcha {
+    position: absolute;
+    right: 30px;
+    bottom: 109px;
+    background-color: #fff;
+    border: 2px solid #fff;
+    height: 40px;
+    color: #ccc; 
+    padding: 0 10px;
+    border-left: solid 1px #dcdfe6;
+    border-radius: 4px;
+}
+section.login .item .form .captcha:hover { color: #ccc; cursor: pointer; }
+section.login .item .form .submit {
+    width: 360px;
+    height: 50px;
+    color: #fff;
+    margin: 0 auto;
+    background-color: #538acb;
+    border: none;
+    cursor: pointer;
+} 
+section.login .item .form .submit:hover {
+    color: yellow;
+}
+
+/* nprogress */
+@-webkit-keyframes nprogress-radius {
+    0%   { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  @keyframes nprogress-radius {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  div.nprogressRadius {
+      position: fixed;
+      right: 10px;
+      top: 10px;
+      width: 18px;
+      height: 18px;
+      box-sizing: border-box;
+      border: solid 2px transparent;
+      border-top-color: #29d;
+      border-left-color: #29d;
+      border-radius: 50%;
+      -webkit-animation: nprogress-radius 400ms linear infinite;
+      animation: nprogress-radius 400ms linear infinite;
+  }
